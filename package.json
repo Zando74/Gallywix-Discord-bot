@@ -1,0 +1,24 @@
+{
+  "name": "gallywixbot",
+  "version": "1.0.0",
+  "description": "Discord bot to support world of warcraft players",
+  "main": "client.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node client.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Zando74/Gallywix-Discord-bot.git"
+  },
+  "author": "Zando",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Zando74/Gallywix-Discord-bot/issues"
+  },
+  "homepage": "https://github.com/Zando74/Gallywix-Discord-bot#readme",
+  "dependencies": {
+    "discord.js": "^12.4.1",
+    "https": "^1.0.0"
+  }
+}

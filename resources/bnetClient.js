@@ -11,7 +11,7 @@ module.exports = class BnetAPI{
         });
     }
 
-    createAccessToken(region='eu'){
+    createAccessToken(region=require('../environnement').REGION){
         return new Promise((resolve,reject) => {
             let credentials = Buffer.from(`${this.clientID}:${this.clientSecret}`);
             const requestOptions = {
@@ -54,7 +54,7 @@ module.exports = class BnetAPI{
                 }
     }
 
-    getTokenPrice(region='eu'){
+    getTokenPrice(region=require('../environnement').REGION){
         return new Promise((resolve,reject) => {
             let responseData = '';
             function requestHandler(res) {
@@ -72,7 +72,39 @@ module.exports = class BnetAPI{
                 reject(error);
             });
         });
-        
+    }
+
+    getFrenchNameOfAnItem(englishName,region = require('../environnement').REGION){
+        return new Promise((resolve,reject) => {
+            let responseData = '';
+            function requestHandler(res) {
+                res.on('data', (chunk) => {
+                    responseData += chunk;
+                });
+                res.on('end', () => {
+                    let data = JSON.parse(responseData);
+                    try{
+                        resolve(data.results.filter(item => item.data.name.en_GB == englishName)[0].data.name.fr_FR);
+                    }catch(err){
+                        resolve("");
+                    }
+                })
+            }
+            let request = this.https.request(
+                {
+                    host: `${region}.api.blizzard.com`,
+                    path: `/data/wow/search/item?namespace=static-${region}&name.en_US=${englishName.replace(/ /g,'%20')}`,
+                    method: 'GET',
+                    headers:
+                    {
+                        'Authorization': `Bearer ${this.access_token}`
+                    }
+                },requestHandler);
+            request.on('error', (error) => {
+                reject(error);
+            });
+            request.end();
+        });
     }
 
 }

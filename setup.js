@@ -35,8 +35,7 @@ rl.question("Please enter your Discord App Token : \n", (DiscordToken) => {
                                 }
                             )
                             rl.close();
-                            environnement = require("./environnement");
-                            if(environnement.FRENCHMODE == 'YES'){
+                            if(Response == 'YES'){
                                 console.log("Vous avez choisis le mode FR assurez vous de posseder le fichier FrenchDB !")
                                 const mongoose = require('./Database/mongoose');
                                 let EnFrBinding = require('./Database/models/EnFrBinding');

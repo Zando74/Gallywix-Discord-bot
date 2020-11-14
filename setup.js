@@ -58,7 +58,7 @@ rl.question("Please enter your Discord App Token : \n", (DiscordToken) => {
                                                     console.log("Base de donnée de traduction sauvegardée !");
                                                     console.log("Il s'agit d'une solide base de plus de 18000 items, à Chaque nouvelle item rencontré à l'hdv, il sera ajouté a votre collection locale");
                                                     console.log("L'installation c'est bien passé !");
-                                                    exit(1)
+                                                    exit(0);
                                                 }
                                             })
                                         })

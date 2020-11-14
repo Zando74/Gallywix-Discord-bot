@@ -1,5 +1,6 @@
 /* SETUP ENVIRONNEMENT */
 var fs = require('fs');
+const { exit } = require('process');
 const readline = require('readline');
 const rl = readline.createInterface({
     input: process.stdin,
@@ -38,7 +39,6 @@ rl.question("Please enter your Discord App Token : \n", (DiscordToken) => {
                                 console.log("Vous avez choisis le mode FR assurez vous de posseder le fichier FrenchDB !")
                                 const mongoose = require('./Database/mongoose');
                                 let EnFrBinding = require('./Database/models/EnFrBinding');
-                                const environnement = require('./environnement');
                                 mongoose.connect('mongodb://127.0.0.1:27017/Gallywix',{ useNewUrlParser: true, useUnifiedTopology: true})
                                     .then(() => 
                                     {
@@ -57,6 +57,8 @@ rl.question("Please enter your Discord App Token : \n", (DiscordToken) => {
                                                 }else{
                                                     console.log("Base de donnée de traduction sauvegardée !");
                                                     console.log("Il s'agit d'une solide base de plus de 18000 items, à Chaque nouvelle item rencontré à l'hdv, il sera ajouté a votre collection locale");
+                                                    console.log("L'installation c'est bien passé !");
+                                                    exit(1)
                                                 }
                                             })
                                         })

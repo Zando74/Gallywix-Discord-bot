@@ -1,7 +1,6 @@
 /* SETUP ENVIRONNEMENT */
 var fs = require('fs');
 const readline = require('readline');
-const environnement = require('./environnement');
 const rl = readline.createInterface({
     input: process.stdin,
     output: process.stdout

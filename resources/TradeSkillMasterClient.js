@@ -99,13 +99,32 @@ module.exports = class TSMApi {
                 }).catch(err => console.log(err));
             }else{
                 if(i < items.length-1){
-                    console.log(`${items[i].Name} already translated -- ${i}/${items.length}`);
+                    //console.log(`${items[i].Name} already translated -- ${i}/${items.length}`);
                     i+=1;
                     this.translateRecursivly(bnetClient,items,i);
                 }
             }
             
         });
+    }
+
+    getItemDatabyFrenchName(FrName){
+        return new Promise((resolve,reject) => {
+            this.EnFrBinding.findOne({FrName : FrName}, (err,item) => {
+                if(item === null){
+                    reject("Not found");
+                }else{
+                    this.Item.findOne({Name : item.EnName},(err,item) =>{
+                        if(item === null){
+                            reject("Not found")
+                        }else{
+                            resolve(item.toJSON());
+                        }
+                    })
+                }
+            })
+        })
+        
     }
 
 }

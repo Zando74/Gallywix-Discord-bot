@@ -107,4 +107,38 @@ module.exports = class BnetAPI{
         });
     }
 
+    getItemMediaByID(id,region = require('../environnement').REGION){
+        return new Promise((resolve,reject) => {
+            let responseData = '';
+            function requestHandler(res) {
+                res.on('data', (chunk) => {
+                    responseData += chunk;
+                });
+                res.on('end', () => {
+                    let data = JSON.parse(responseData);
+                    try{
+                        resolve(data);
+                    }catch(err){
+                        resolve("");
+                    }
+                })
+            }
+            let request = this.https.request(
+                {
+                    host: `${region}.api.blizzard.com`,
+                    path: `/data/wow/media/item/${id}?namespace=static-${region}`,
+                    method: 'GET',
+                    headers:
+                    {
+                        'Authorization': `Bearer ${this.access_token}`
+                    }
+                },requestHandler);
+                request.on('error', (error) => {
+                    reject(error);
+                });
+                request.end();
+        })
+    }
+
+
 }

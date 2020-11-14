@@ -20,14 +20,16 @@ new BnetClient().then(bnetClient => {
             if(require('./environnement').FRENCHMODE == 'YES'){
                 console.log("FRENCHMODE is enable translating the base (if it's the first execution it will be take a long time)")
                 tsmclient.translateDataBase(bnetClient);
+                setInterval(() => {tsmclient.translateDataBase(bnetClient)},3600000);
             }
+            require('./resources/commands')(client,bnetClient,tsmclient);
+            client.login(require('./environnement').DISCORD_TOKEN);
 
         }).catch(err => { console.log(error)});
 
     }).catch((err) => console.error(err));
     
-    require('./resources/commands')(client,bnetClient);
-    client.login(require('./environnement').DISCORD_TOKEN);
+    
 })
 
 

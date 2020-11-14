@@ -98,7 +98,8 @@ module.exports = class TSMApi {
                     });
                 }).catch(err => console.log(err));
             }else{
-                if(i < items.length){
+                if(i < items.length-1){
+                    console.log(`${items[i].Name} already translated -- ${i}/${items.length}`);
                     i+=1;
                     this.translateRecursivly(bnetClient,items,i);
                 }

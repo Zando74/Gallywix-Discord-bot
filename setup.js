@@ -1,6 +1,7 @@
 /* SETUP ENVIRONNEMENT */
 var fs = require('fs');
 const readline = require('readline');
+const environnement = require('./environnement');
 const rl = readline.createInterface({
     input: process.stdin,
     output: process.stdout
@@ -34,6 +35,35 @@ rl.question("Please enter your Discord App Token : \n", (DiscordToken) => {
                                 }
                             )
                             rl.close();
+                            environnement = require("./environnement");
+                            if(environnement.FRENCHMODE == 'YES'){
+                                console.log("Vous avez choisis le mode FR assurez vous de posseder le fichier FrenchDB !")
+                                const mongoose = require('./Database/mongoose');
+                                let EnFrBinding = require('./Database/models/EnFrBinding');
+                                const environnement = require('./environnement');
+                                mongoose.connect('mongodb://127.0.0.1:27017/Gallywix',{ useNewUrlParser: true, useUnifiedTopology: true})
+                                    .then(() => 
+                                    {
+                                        EnFrBinding.collection.drop().then(res => {}).catch(err => {console.log(err)});
+                                        fs.readFile("./FrenchDB.json", (err,data) => {
+                                            if(err)
+                                                console.log(err);
+                                            let DB = JSON.parse(data)
+                                            DBclean = DB.map(
+                                                (item) =>{ return { "EnName" : item.EnName,
+                                                            "FrName" : item.FrName}
+                                            })
+                                            EnFrBinding.insertMany(DBclean,(err,res) => {
+                                                if(err){
+                                                    console.log(err)
+                                                }else{
+                                                    console.log("Base de donnée de traduction sauvegardée !");
+                                                    console.log("Il s'agit d'une solide base de plus de 18000 items, à Chaque nouvelle item rencontré à l'hdv, il sera ajouté a votre collection locale");
+                                                }
+                                            })
+                                        })
+                                    })
+                            }
                         });
                     }) 
                 })
@@ -41,3 +71,5 @@ rl.question("Please enter your Discord App Token : \n", (DiscordToken) => {
         })
     })
 })
+
+

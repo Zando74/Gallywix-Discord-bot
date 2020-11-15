@@ -45,7 +45,7 @@ rl.question("Please enter your Discord App Token : \n", (DiscordToken) => {
                                     {
                                         console.log("Création de la base de donnée à partir de FrenchDB.json");
                                         try{
-                                            EnFrBinding.collection.drop().then(res => {}).catch(err => {console.log(err)});
+                                            EnFrBinding.collection.drop().then(res => {}).catch(err => {});
                                         }
                                         finally{
                                             fs.readFile("./FrenchDB.json", (err,data) => {

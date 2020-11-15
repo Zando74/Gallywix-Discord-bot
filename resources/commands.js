@@ -37,7 +37,7 @@ module.exports = function(client,bnetClient,tsmclient) {
                         const embed = new MessageEmbed()
                         .setTitle(`Auctions House information for [${item}]`)
                         .setColor(0xffe507)
-                        .setDescription(`Price : ${Math.floor(res.MinBuyout/10000)} Golds \n Average value : ${Math.floor(res.RegionMarketAvg/10000)} Golds \n Quantity : ${res.Quantity} \n there are about ${res.RegionAvgDailySold} sales per day \n`)
+                        .setDescription(`Price : ${Math.floor(res.MinBuyout/10000)} Golds \n Average value : ${Math.floor(res.RegionMarketAvg/10000)} Golds \n Quantity : ${res.Quantity} \n There are about ${res.RegionAvgDailySold} sales per day \n`)
                         .setThumbnail(media.assets[0].value)
                         .setURL(res.URL);
                         msg.reply(embed);

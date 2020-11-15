@@ -50,7 +50,7 @@ module.exports = function(client,bnetClient,tsmclient) {
             const embed = new MessageEmbed()
             .setTitle(`All commands :`)
             .setColor(0xff507)
-            .setDescription(` ::Token => return WOW Token price on ${require("../environnement").REGION}\n ::Price [iTEMNAME] => return statistics of this item on ${require("../environnement").REGION}-${require("../environnement").REALM} \n (example : '::Price [Deep Sea Bag]' or '::Price [Sac des abysses]' )`)
+            .setDescription(` ::Token => return WOW Token price on ${require("../environnement").REGION}\n ::Price [ITEMNAME] => return statistics of this item on ${require("../environnement").REGION}-${require("../environnement").REALM} \n (example : '::Price [Deep Sea Bag]' or '::Price [Sac des abysses]' )`)
             .setThumbnail('https://i.imgur.com/pQP4T8V.jpeg')
             msg.reply(embed);
         }

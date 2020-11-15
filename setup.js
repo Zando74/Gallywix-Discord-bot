@@ -13,13 +13,13 @@ rl.question("Please enter your Discord App Token : \n", (DiscordToken) => {
             rl.question("Please enter your TSM Api Key \n", (TsmApiKey) => {
                 rl.question("Please enter your Region \n", (Region) => {
                     rl.question("Please enter your Realm \n", (Realm) => {
-                        rl.question("Do you want to enable frenchMode (It's allow you to ask the bot for item by his french name) \n"
-                        +"If you enable this the first execution of the program will take a lot of time in order to create the translation database \n",(Response)=> {
+                        rl.question("Do you want to enable frenchMode (get price by French Name) (yes/no) \n"
+                        ,(Response)=> {
                             Region = Region.toLowerCase();
                             Realm = Realm.charAt(0).toUpperCase() + Realm.slice(1);
                             Response = Response.toUpperCase();
                             console.log("This information will be saved, make sure there are valid !")
-                            console.log(`DiscordToken : ${DiscordToken}`,`ClientID : ${ClientID}`,`ClientSecret : ${ClientSecret}` ,`Region : ${Region}`,`Realm : ${Realm}`,`Response : ${Response}`);
+                            console.log(`DiscordToken : ${DiscordToken} \n`,`ClientID : ${ClientID} \n`,`ClientSecret : ${ClientSecret} \n` ,`Region : ${Region} \n`,`Realm : ${Realm} \n`,`Response : ${Response} \n`);
                             fs.writeFile('environnement.js', 
                                 `module.exports = {
     DISCORD_TOKEN : "${DiscordToken}",

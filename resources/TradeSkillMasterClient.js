@@ -42,9 +42,8 @@ module.exports = class TSMApi {
 
     updateDataBase() {
         return new Promise((resolve,reject) => {
-            console.log("Delete all Base");
             this.dropDataBase();
-            console.log("Add items from auction house...")
+            console.log("Updating items informations from auction house...")
             this.getAllHV().then( (res) => {
             res.forEach( (item,index) => {
                 const newItem = new this.Item({
@@ -56,7 +55,7 @@ module.exports = class TSMApi {
                     NumAuctions : item.NumAuctions,
                     RegionMarketAvg : item.RegionMarketAvg,
                     RegionAvgDailySold : item.RegionAvgDailySold,
-                    URL : `theunderminejournal.com/#${require('../environnement').REGION}/${require('../environnement').REALM}/item/${item.Id}`
+                    URL : `https://theunderminejournal.com/#${require('../environnement').REGION}/${require('../environnement').REALM}/item/${item.Id}`
                 });
                 newItem.save((err) => {
                     if(err) reject(err)
@@ -81,7 +80,7 @@ module.exports = class TSMApi {
         this.EnFrBinding.findOne({ EnName : items[i].Name }, (err,itemName) => {
             if(itemName === null){
                 bnetClient.getFrenchNameOfAnItem(items[i].Name).then((FrName) => {
-                    console.log(`Translate ${items[i].Name} into ${FrName} -- ${i}/${items.length}`);
+                    console.log(`Traduction de ${items[i].Name} en ${FrName} -- ${i}/${items.length-1}`);
                     const newFrEnBinding = new this.EnFrBinding({
                         EnName : items[i].Name,
                         FrName : FrName
@@ -99,9 +98,10 @@ module.exports = class TSMApi {
                 }).catch(err => console.log(err));
             }else{
                 if(i < items.length-1){
-                    //console.log(`${items[i].Name} already translated -- ${i}/${items.length}`);
                     i+=1;
                     this.translateRecursivly(bnetClient,items,i);
+                }else{
+                    console.log("Tout les objets ont été traduis !")
                 }
             }
             
@@ -110,11 +110,11 @@ module.exports = class TSMApi {
 
     getItemDatabyFrenchName(FrName){
         return new Promise((resolve,reject) => {
-            this.EnFrBinding.findOne({FrName : FrName}, (err,item) => {
-                if(item === null){
+            this.EnFrBinding.findOne({FrName : FrName}, (err,itemFR) => {
+                if(itemFR === null){
                     reject("Not found");
                 }else{
-                    this.Item.findOne({Name : item.EnName},(err,item) =>{
+                    this.Item.findOne({Name : itemFR.EnName},(err,item) =>{
                         if(item === null){
                             reject("Not found")
                         }else{
@@ -125,6 +125,18 @@ module.exports = class TSMApi {
             })
         })
         
+    }
+
+    getItemDatabyEnglishName(EnName){
+        return new Promise((resolve,reject) => {
+            this.Item.findOne({ Name : EnName}, (err,item) => {
+                if(item === null){
+                    reject("Not found");
+                }else{
+                    resolve(item.toJSON());
+                }
+            })
+        })
     }
 
 }

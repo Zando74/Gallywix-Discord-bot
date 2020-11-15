@@ -7,7 +7,6 @@ const { mongo } = require('./Database/mongoose');
 
 new BnetClient().then(bnetClient => {
     client.on('ready', () => {
-        console.log(`Logged in as ${client.user.tag} !`);
         client.user.setPresence({ activity: { name : 'World of Warcraft'}, status: 'online'}).catch(console.error);
     });
     mongoose.connect('mongodb://127.0.0.1:27017/Gallywix',{ useNewUrlParser: true, useUnifiedTopology: true})
@@ -18,7 +17,7 @@ new BnetClient().then(bnetClient => {
         tsmclient.updateDataBase().then( (res) => {
             console.log("All data have been saved");
             if(require('./environnement').FRENCHMODE == 'YES'){
-                console.log("FRENCHMODE is enable translating the base (if it's the first execution it will be take a long time)")
+                console.log("Le mode FR est activé, traductions des noms...")
                 tsmclient.translateDataBase(bnetClient);
                 setInterval(() => {tsmclient.translateDataBase(bnetClient)},3600000);
             }

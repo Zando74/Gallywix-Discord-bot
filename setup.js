@@ -44,24 +44,28 @@ rl.question("Please enter your Discord App Token : \n", (DiscordToken) => {
                                     .then(() => 
                                     {
                                         console.log("Création de la base de donnée à partir de FrenchDB.json");
-                                        EnFrBinding.collection.drop().then(res => {}).catch(err => {console.log(err)});
-                                        fs.readFile("./FrenchDB.json", (err,data) => {
-                                            if(err)
-                                                console.log(err);
-                                            let DB = JSON.parse(data)
-                                            DBclean = DB.map(
-                                                (item) =>{ return { "EnName" : item.EnName,
-                                                            "FrName" : item.FrName}
+                                        try{
+                                            EnFrBinding.collection.drop().then(res => {}).catch(err => {console.log(err)});
+                                        }
+                                        finally{
+                                            fs.readFile("./FrenchDB.json", (err,data) => {
+                                                if(err)
+                                                    console.log(err);
+                                                let DB = JSON.parse(data)
+                                                DBclean = DB.map(
+                                                    (item) =>{ return { "EnName" : item.EnName,
+                                                                "FrName" : item.FrName}
+                                                })
+                                                EnFrBinding.insertMany(DBclean,(err,res) => {
+                                                    if(err){
+                                                        console.log(err)
+                                                    }else{
+                                                        console.log("Base de donnée de traduction sauvegardée. \n L'installation c'est bien passé !");
+                                                        exit(0);
+                                                    }
+                                                })
                                             })
-                                            EnFrBinding.insertMany(DBclean,(err,res) => {
-                                                if(err){
-                                                    console.log(err)
-                                                }else{
-                                                    console.log("Base de donnée de traduction sauvegardée. \n L'installation c'est bien passé !");
-                                                    exit(0);
-                                                }
-                                            })
-                                        })
+                                        }
                                     })
                             }
                         });

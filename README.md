@@ -13,7 +13,7 @@ Discord Bot to support World of Warcraft Players
 - Then, type ```npm run-script setup``` it's will run setup script asking for **required informations**
 
 # Run
-- If all it's right, type ```npm start``` it's will run the Discord Bot
+- If all is right, type ```npm start``` it's will run the Discord Bot
 
 # Commands
 - ::Help
